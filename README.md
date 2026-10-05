@@ -26,7 +26,7 @@ Cada branch deste repositório contém o código para um dia específico do desa
 
 1. Clone o repositório na sua máquina local:
     ```sh
-    git clone https://github.com/Sarocy/7days-of-code-java.git
+    git clone https://github.com/7-days-of-code/saude-java-spring.git
     ```
 
 2. Troque para a branch desejada:
@@ -38,7 +38,7 @@ Cada branch deste repositório contém o código para um dia específico do desa
     ```
 
 3. Importe o projeto para a sua IDE (IntelliJ IDEA, Eclipse, etc.).
-4. Execute o projeto usando a classe principal (SaudeDiariaApplication):
+4. Execute o projeto usando a classe principal (ApiApplication):
     ```sh
     ./mvnw spring-boot:run
     ```
