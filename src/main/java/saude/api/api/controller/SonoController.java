@@ -4,7 +4,6 @@ import saude.api.api.model.Sono;
 import saude.api.api.repository.SonoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -15,10 +14,8 @@ public class SonoController {
     private SonoRepository sonoRepository;
 
     @GetMapping("/cadastro")
-    public String formCadastro(Model model) {
-        model.addAttribute("sonos", sonoRepository.findAll());
-        model.addAttribute("sono", new Sono());
-        return "crud";
+    public String formCadastro() {
+        return "redirect:/crud";
     }
 
     @PostMapping("/salvar")
@@ -28,11 +25,11 @@ public class SonoController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model) {
-        Sono sono = sonoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Registro não encontrado: " + id));
-        model.addAttribute("sono", sono);
-        return "crud";
+    public String editar(@PathVariable Long id) {
+        if (!sonoRepository.existsById(id)) {
+            throw new IllegalArgumentException("Registro de Sono não encontrado: " + id);
+        }
+        return "redirect:/crud";
     }
 
     @PostMapping("/editar/{id}")

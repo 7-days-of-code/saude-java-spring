@@ -4,7 +4,6 @@ import saude.api.api.model.Refeicao;
 import saude.api.api.repository.RefeicaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -15,10 +14,8 @@ public class RefeicaoController {
     private RefeicaoRepository refeicaoRepository;
 
     @GetMapping("/listar")
-    public String listarRefeicoes(Model model) {
-        model.addAttribute("refeicoes", refeicaoRepository.findAll());
-        model.addAttribute("refeicao", new Refeicao());
-        return "crud";
+    public String listarRefeicoes() {
+        return "redirect:/crud";
     }
 
     @PostMapping("/salvar")
@@ -28,11 +25,11 @@ public class RefeicaoController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editarRefeicao(@PathVariable Long id, Model model) {
-        Refeicao refeicao = refeicaoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Refeição não encontrada: " + id));
-        model.addAttribute("refeicao", refeicao);
-        return "crud";
+    public String editarRefeicao(@PathVariable Long id) {
+        if (!refeicaoRepository.existsById(id)) {
+            throw new IllegalArgumentException("Registro de Refeicao não encontrado: " + id);
+        }
+        return "redirect:/crud";
     }
 
     @PostMapping("/editar/{id}")

@@ -10,6 +10,7 @@ import saude.api.api.repository.RefeicaoRepository;
 import saude.api.api.repository.SonoRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +33,9 @@ public class RelatorioService {
     public Double getMediaTempoGeral() {
         List<Exercicio> exercicios = exercicioRepository.findAll();
         return exercicios.stream()
-                .mapToDouble(Exercicio::getTempo)
+                .map(Exercicio::getTempo)
+                .filter(Objects::nonNull)
+                .mapToDouble(Number::doubleValue)
                 .average()
                 .orElse(0.0);
     }
@@ -46,6 +49,7 @@ public class RelatorioService {
         List<Exercicio> exercicios = exercicioRepository.findAll();
         return exercicios.stream()
                 .map(Exercicio::getTempo)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
@@ -57,7 +61,9 @@ public class RelatorioService {
     public Double getMediaCaloriasGeral() {
         List<Refeicao> refeicoes = refeicaoRepository.findAll();
         return refeicoes.stream()
-                .mapToDouble(Refeicao::getQuantidade)
+                .map(Refeicao::getQuantidade)
+                .filter(Objects::nonNull)
+                .mapToDouble(Number::doubleValue)
                 .average()
                 .orElse(0.0);
     }
@@ -71,6 +77,7 @@ public class RelatorioService {
         List<Refeicao> refeicoes = refeicaoRepository.findAll();
         return refeicoes.stream()
                 .map(Refeicao::getQuantidade)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
