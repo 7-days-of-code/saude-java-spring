@@ -2,7 +2,6 @@ package saude.api.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +21,8 @@ public class ExercicioController {
     private ExercicioRepository exercicioRepository;
 
     @GetMapping("/listar")
-    public String listarExercicios(Model model) {
-        model.addAttribute("exercicios", exercicioRepository.findAll());
-        model.addAttribute("exercicio", new Exercicio());
-        return "crud";
+    public String listarExercicios() {
+        return "redirect:/crud";
     }
 
     @PostMapping("/salvar")
@@ -35,12 +32,11 @@ public class ExercicioController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editarExercicio(@PathVariable Long id, Model model) {
-        Exercicio exercicio = exercicioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Exercício não encontrado: "
-                        + id));
-        model.addAttribute("exercicio", exercicio);
-        return "crud";
+    public String editarExercicio(@PathVariable Long id) {
+        if (!exercicioRepository.existsById(id)) {
+            throw new IllegalArgumentException("Registro de Exercicio não encontrado: " + id);
+        }
+        return "redirect:/crud";
     }
 
     @PostMapping("/editar/{id}")
@@ -61,7 +57,7 @@ public class ExercicioController {
 
             return "redirect:/crud";
         } catch (Exception e) {
-            return "redirect:/exercicio/listar?error=" + e.getMessage();
+            return "redirect:/crud";
         }
     }
 
