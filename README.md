@@ -10,5 +10,5 @@ No nosso último dia de desafio fechamos nosso projeto criando relatórios para 
 
 - Criamos um `RelatorioService` que calcula as médias necessárias para os relatórios, consultando os repositórios e calculando médias, como tempo gasto em exercícios, calorias consumidas e horas dormidas.
 
-- Atualizamos os repositórios incluindo consultas para calcular as médias diretamente no banco de dados, usando anotações @Query no JPA. 
+- Deixamos nos repositórios, com a anotação @Query, as consultas que calculam as médias diretamente no banco. O `RelatorioService` calcula em Java, com a API de streams, ignorando os registros gravados sem valor; as consultas @Query ficam como ponto de partida para quem quiser fazer a conta no banco. 
 
